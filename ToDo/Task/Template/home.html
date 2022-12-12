@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block content %}
+<style type="text/css">
+    label{width:100px;display:inline-block;}
+</style>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="banner" style="background-color:green;width:100%;height:200px;margin-bottom:50px;">
+                <div class="banner-text" style="top:50%;left:50%;position:absolute;transform:transform;">
+                    <center>
+                    <h1>ToDo</h1>
+                    </center>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div style="box-shadow:rgb(204,219,232) 3px 3px 6px 0px inset,rgba(255,255,255,0.5) -3px -3px 6px 1px inset;">
+            <form method="POST" class="p-3 shadow">
+            {% csrf_token %}
+        <div class="form-group">
+          <input type="text" class="form-control" name="task" placeholder="Enter your task"><br>
+        </div>
+        <div class="form-group">
+         <input type="number" class="form-control" name="priority" placeholder="Enter the priority"><br>
+        </div>
+        <div class="form-group">
+         <input type="date" class="form-control" name="date" placeholder="Enter the date"><br>
+        </div>
+         <input type="submit" class="btn btn-success">
+            </form>
+                </div>
+                </div>
+            <br>
+ {% for i in work %}
+{{i.task}}
+{{i.priority}}
+{{i.date}}<br>
+ {% endfor %}
+        </div>
+        <div class="col-md-6">
+            <h4>Task to be Completed</h4>
+            {% for i in work %}
+            <div class="card">
+                <div style="box-shadow:rgb(204,219,232) 3px 3px 6px 0px inset,rgba(255,255,255,0.5) -3px -3px 6px 1px inset;">
+                <div class="card-body">
+                    <h5 class="card-title">{{i.task}}</h5>
+                    <p><b>{{i.priority}}</b></p>
+                    <p><b>{{i.date}}</b></p>
+                    <a class="btn btn-danger" href="{% url 'delete' i.id %}">Done</a>
+                    <a class="btn btn-success" href="{% url 'update' i.id %}">Update</a>
+                </div>
+                    </div>
+            </div>
+            <br>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
